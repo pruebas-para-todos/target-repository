@@ -50,13 +50,13 @@ jobs:
           run: |
             workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
             echo "$workflow"
-            echo "WORKFLOW=$workflow" >> $GITHUB_OUTPUT
+            echo "WORKFLOW=$workflow" >> $GITHUB_ENV
         - name: Capture audit file
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
             audit="$(cat README.md )"
             echo "$audit"
-            echo "AUDIT=$audit" >> $GITHUB_OUTPUT
+            echo "AUDIT=$audit" >> $GITHUB_ENV
             
             
             
