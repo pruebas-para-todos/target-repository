@@ -59,13 +59,17 @@ jobs:
         - name: Check if that YML is successful
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
-            ls
-            successful=$(grep -A 3 "### Successful" README.md | grep "${{ steps.path.outputs.FILE_PATH }}")
-            if [ -n "$successful" ]; then
-              echo "La cadena está presente en Successful."
+            awk '/### Successful/{p=1} /### Partially successful/{p=0} p' README.md > successful.md
+            grep -q '${{ steps.path.outputs.FILE_PATH }}' successful.md
+            if [ $? -eq 0 ]; then
+                found=true
             else
-              echo "La cadena no está presente en Successful."
+                found=false
             fi
+            echo $found
+
+
+            
 
 
             
