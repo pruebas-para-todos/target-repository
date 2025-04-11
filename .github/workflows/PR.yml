@@ -39,8 +39,6 @@ jobs:
             path: ${{ env.CHECKOUT_HEAD_PATH }}
             ref: ${{ github.head_ref }}
             sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
-            # sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
-            # sparse-checkout-cone-mode: false
         - name: Checkout audit file
           uses: actions/checkout@v4
           with:
@@ -54,6 +52,7 @@ jobs:
         - name: Capture audit file
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
+            ls
             workflow="$(cat README.md )"
             echo "$audit"
             
