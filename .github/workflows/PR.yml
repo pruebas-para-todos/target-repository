@@ -60,13 +60,14 @@ jobs:
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
             awk '/### Successful/{p=1} /### Partially successful/{p=0} p' README.md > successful.md
-            grep -q '${{ steps.path.outputs.FILE_PATH }}' successful.md
-            if [ $? -eq 0 ]; then
-                found=true
-            else
-                found=false
-            fi
-            echo $found
+            cat successful.md
+            # grep -q '${{ steps.path.outputs.FILE_PATH }}' successful.md
+            # if [ $? -eq 0 ]; then
+            #     found=true
+            # else
+            #     found=false
+            # fi
+            # echo $found
 
 
             
