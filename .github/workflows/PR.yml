@@ -35,8 +35,8 @@ jobs:
           uses: actions/checkout@v4
           with:
             ref: ${{ github.head_ref }}
-            sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
-            sparse-checkout-cone-mode: false
+            # sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
+            # sparse-checkout-cone-mode: false
         # - name: Checkout audit file
         #   uses: actions/checkout@v4
         #   with:
