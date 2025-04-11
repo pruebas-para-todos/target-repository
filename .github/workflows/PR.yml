@@ -55,7 +55,7 @@ jobs:
         - name: Capture audit file
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
-            workflow="$(cat ${{ env.CHECKOUT_AUDIT_PATH }}/README.md )"
+            workflow="$(cat README.md )"
             echo "$audit"
             
             
