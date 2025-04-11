@@ -61,13 +61,14 @@ jobs:
           run: |
             awk '/### Successful/{p=1} /### Partially successful/{p=0} p' README.md > successful.md
             cat successful.md
-            # grep -q '${{ steps.path.outputs.FILE_PATH }}' successful.md
-            # if [ $? -eq 0 ]; then
-            #     found=true
-            # else
-            #     found=false
-            # fi
-            # echo $found
+            successful=$(cat successful.md)
+            if [[ "$successful" == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
+                found=true
+                echo "true"
+            else
+                found=false
+                echo "false"
+            fi
 
 
             
