@@ -53,7 +53,7 @@ jobs:
             cd ../${{ env.CHECKOUT_AUDIT_PATH }}
             audit="$(cat README.md )"
             echo "$audit"
-            name=$(yq eval '.name' $workflow)
+            name_value=$(echo "$yaml_content" | yq eval '.name' -)
             
             
             
