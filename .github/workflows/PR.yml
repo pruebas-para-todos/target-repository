@@ -53,7 +53,7 @@ jobs:
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
             ls
-            workflow="$(cat README.md )"
+            audit="$(cat README.md )"
             echo "$audit"
             
             
