@@ -44,6 +44,7 @@ jobs:
           with:
             path: ${{ env.CHECKOUT_AUDIT_PATH }}
             repository: ${{ env.REPOSITORY_OWNER }}/${{ env.AUDIT_REPOSITORY }}
+            sparse-checkout: README.md
         - name: Capture workflow file
           working-directory: ${{ env.CHECKOUT_HEAD_PATH }}
           run: |
