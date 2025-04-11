@@ -1,0 +1,55 @@
+name: IA Workflow
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+env:
+  # Token con permisos dentro de la ORG
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Variable donde coger el audit file
+  AUDIT_REPOSITORY: bitbucket-audit
+  # Owner del repositorio
+  REPOSITORY_OWNER: ${{ github.repository_owner }}
+concurrency:
+  group: ia-workflow
+  cancel-in-progress: false
+
+jobs:
+    execute-ia:
+      runs-on: ubuntu-latest
+      steps:
+        - name: GET Files
+          id: file
+          run: |
+            response=$(curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/pruebas-para-todos/target-repository/pulls/${{ github.event.pull_request.number }}/files)
+            echo "$response"
+            file_names=$(echo "$response" | jq -r '.[] | .filename')
+            echo $file_names
+            echo "FILE_NAME=$file_names" >> $GITHUB_OUTPUT
+        - name: Checkout file
+          uses: actions/checkout@v4
+          with:
+            ref: ${{ github.head_ref }}
+            sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
+            sparse-checkout-cone-mode: false
+        # - name: Checkout audit file
+        #   uses: actions/checkout@v4
+        #   with:
+        #     repository: ${{ env.REPOSITORY_OWNER }}/${{ env.AUDIT_REPOSITORY }}
+        #     sparse-checkout: README.md
+        #     sparse-checkout-cone-mode: false
+        - name: Capture files
+          run: |
+            workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
+            audit="$(cat README.md)"
+            echo "$workflow"
+            echo "$audit"
+            
+            
+
+
