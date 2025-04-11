@@ -60,7 +60,7 @@ jobs:
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
             ls
-            successful=$(grep -A 3 "### Successful" README.md | grep "${{ steps.path.outputs.$FILE_PATH }}")
+            successful=$(grep -A 3 "### Successful" README.md | grep "${{ steps.path.outputs.FILE_PATH }}")
             if [ -n "$successful" ]; then
               echo "La cadena está presente en Successful."
             else
