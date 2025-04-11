@@ -11,6 +11,7 @@ env:
   AUDIT_REPOSITORY: bitbucket-audit
   # Owner del repositorio
   REPOSITORY_OWNER: ${{ github.repository_owner }}
+  CHECKOUT_HEAD_PATH: head
 concurrency:
   group: ia-workflow
   cancel-in-progress: false
@@ -34,7 +35,9 @@ jobs:
         - name: Checkout file
           uses: actions/checkout@v4
           with:
+            path: ${{ env.CHECKOUT_HEAD_PATH }}
             ref: ${{ github.head_ref }}
+            sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
             # sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
             # sparse-checkout-cone-mode: false
         # - name: Checkout audit file
@@ -44,12 +47,11 @@ jobs:
         #     sparse-checkout: README.md
         #     sparse-checkout-cone-mode: false
         - name: Capture files
+          working-directory: ${{ env.CHECKOUT_HEAD_PATH }}
           run: |
             ls
             workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
-            audit="$(cat README.md)"
             echo "$workflow"
-            echo "$audit"
             
             
 
