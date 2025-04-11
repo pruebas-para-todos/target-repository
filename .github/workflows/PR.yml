@@ -52,8 +52,10 @@ jobs:
             echo "$name"
             if [[ $name == *"/"* ]]; then
               echo "TYPE=build" >> $GITHUB_OUTPUT
+              echo "Type Build"
             else
               echo "TYPE=deployment" >> $GITHUB_OUTPUT
+              echo "Type Deployment"
             fi
 
             
