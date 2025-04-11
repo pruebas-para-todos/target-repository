@@ -46,17 +46,27 @@ jobs:
             repository: ${{ env.REPOSITORY_OWNER }}/${{ env.AUDIT_REPOSITORY }}
             sparse-checkout: README.md
         - name: Check if PR is from Build or Deployment
-          id: type
+          id: path
           run: |
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
             echo "$name"
             if [[ $name == *"/"* ]]; then
-              echo "TYPE=build" >> $GITHUB_OUTPUT
-              echo "Type Build"
+              project=$(echo $name | cut -d'/' -f1)
+              plan=$(echo $name | cut -d'/' -f2)
+              echo "FILE_PATH=build/$project/$plan" >> $GITHUB_OUTPUT
             else
-              echo "TYPE=deployment" >> $GITHUB_OUTPUT
-              echo "Type Deployment"
+              echo "FILE_PATH=deployment/$name" >> $GITHUB_OUTPUT
             fi
+        - name: Check if that YML is successful
+          working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
+          run: |
+            successful=$(grep -A 3 "### Successful" README.md | grep "${{ steps.path.outputs.FILE_PATH }}")
+            if [ -n "$successful" ]; then
+              echo "La cadena está presente en Successful."
+            else
+              echo "La cadena no está presente en Successful."
+            fi
+
 
             
             
