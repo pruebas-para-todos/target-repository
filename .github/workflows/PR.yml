@@ -53,7 +53,7 @@ jobs:
             cd ../${{ env.CHECKOUT_AUDIT_PATH }}
             audit="$(cat README.md )"
             echo "$audit"
-            name=$(echo "$yaml_content" | yq eval '.name' -)
+            name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
             echo "$name"
             if [[ "$name" == *"/"* ]]; then
                 echo "La variable contiene una barra: $variable"
