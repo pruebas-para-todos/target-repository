@@ -63,7 +63,7 @@ jobs:
             cat successful.md
             successful=$(cat successful.md)'
             if [[ $successful == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
-              echo "Found 'world' in string."
+              echo "exists"
             else
               echo "does not exist"
             fi
