@@ -33,30 +33,28 @@ jobs:
             file_names=$(echo "$response" | jq -r '.[] | .filename')
             echo $file_names
             echo "FILE_NAME=$file_names" >> $GITHUB_OUTPUT
-        # - name: Checkout file
-        #   uses: actions/checkout@v4
-        #   with:
-        #     path: ${{ env.CHECKOUT_HEAD_PATH }}
-        #     ref: ${{ github.head_ref }}
-        #     sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
+        - name: Checkout file
+          uses: actions/checkout@v4
+          with:
+            path: ${{ env.CHECKOUT_HEAD_PATH }}
+            ref: ${{ github.head_ref }}
+            sparse-checkout: ${{ steps.file.outputs.FILE_NAME }}
         - name: Checkout audit file
           uses: actions/checkout@v4
           with:
             path: ${{ env.CHECKOUT_AUDIT_PATH }}
             repository: ${{ env.REPOSITORY_OWNER }}/${{ env.AUDIT_REPOSITORY }}
             sparse-checkout: README.md
-        # - name: Capture workflow file
-        #   working-directory: ${{ env.CHECKOUT_HEAD_PATH }}
-        #   run: |
-        #     workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
-        #     echo "$workflow"
-        #     echo "WORKFLOW=$workflow" >> $GITHUB_ENV
-        # - name: Capture audit file
-        #   working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
-        #   run: |
-        #     audit="$(cat README.md )"
-        #     echo "$audit"
-        #     echo "AUDIT=$audit" >> $GITHUB_ENV
+        - name: Check if PR is from Build or Deployment
+          run: |
+            cd ${{ env.CHECKOUT_HEAD_PATH }}
+            workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
+            echo "$workflow"
+            cd ../${{ env.CHECKOUT_AUDIT_PATH }}
+            audit="$(cat README.md )"
+            echo "$audit"
+            name=$(yq eval '.name' ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
+            
             
             
             
