@@ -49,10 +49,10 @@ jobs:
           run: |
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
             echo "$name"
-            if [[ "$name" == *"/"* ]]; then
-                echo "La variable contiene una barra: $variable"
+            if [[ $name == *"/"* ]]; then
+              echo "It's there!"
             else
-                echo "La variable no contiene una barra: $variable"
+              echo "It's not there!"
             fi
 
             
