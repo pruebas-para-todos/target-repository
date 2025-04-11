@@ -45,6 +45,7 @@ jobs:
         #     sparse-checkout-cone-mode: false
         - name: Capture files
           run: |
+            ls
             workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
             audit="$(cat README.md)"
             echo "$workflow"
