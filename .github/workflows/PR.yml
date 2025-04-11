@@ -46,13 +46,14 @@ jobs:
             repository: ${{ env.REPOSITORY_OWNER }}/${{ env.AUDIT_REPOSITORY }}
             sparse-checkout: README.md
         - name: Check if PR is from Build or Deployment
+          id: type
           run: |
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
             echo "$name"
             if [[ $name == *"/"* ]]; then
-              echo "It's there!"
+              echo "TYPE=build" >> $GITHUB_OUTPUT
             else
-              echo "It's not there!"
+              echo "TYPE=deployment" >> $GITHUB_OUTPUT
             fi
 
             
