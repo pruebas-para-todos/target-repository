@@ -1,0 +1,7 @@
+name: prueba/prueba
+on:
+  workflow_dispatch:
+jobs:
+  Default-Stage-Default-Job:
+    runs-on: ubuntu-latest
+    steps:
