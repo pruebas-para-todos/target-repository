@@ -1,0 +1,17 @@
+name: prueba/prueba
+on:
+  workflow_dispatch:
+jobs:
+  Default-Stage-Default-Job:
+    runs-on: ubuntu-latest
+    steps:
+#     # This item has no matching transformer
+#     - any-task/plugin-key/com.atlassian.bamboo.plugins.tomcat.bamboo-tomcat-plugin:deployAppTask:
+#         any-task:
+#           plugin-key: com.atlassian.bamboo.plugins.tomcat.bamboo-tomcat-plugin:deployAppTask
+#           configuration:
+#             tomcatUrl: http://localhost:8080/manager/
+#             warFilePath: asdf
+#             tomcatUsername: admin
+#             encTomcatPassword: BAMSCRT@0@0@VE/hnuLpnZ5emZ6WGDp6HA==
+#             appContext: "/test"
