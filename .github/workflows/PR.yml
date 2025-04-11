@@ -48,7 +48,7 @@ jobs:
         - name: Check if PR is from Build or Deployment
           id: path
           run: |
-            name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
+            name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})/
             if [[ $name == *"/"* ]]; then
               project=$(echo $name | cut -d'/' -f1)
               plan=$(echo $name | cut -d'/' -f2)
