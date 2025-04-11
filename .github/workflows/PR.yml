@@ -61,7 +61,7 @@ jobs:
           run: |
             awk '/### Successful/{p=1} /### Partially successful/{p=0} p' README.md > successful.md
             cat successful.md
-            successful=$(cat successful.md)'
+            successful=$(cat successful.md)
             if [[ $successful == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
               echo "exists"
             else
