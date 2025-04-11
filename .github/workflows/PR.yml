@@ -47,12 +47,6 @@ jobs:
             sparse-checkout: README.md
         - name: Check if PR is from Build or Deployment
           run: |
-            cd ${{ env.CHECKOUT_HEAD_PATH }}
-            workflow="$(cat ${{ steps.file.outputs.FILE_NAME }})"
-            echo "$workflow"
-            cd ../${{ env.CHECKOUT_AUDIT_PATH }}
-            audit="$(cat README.md )"
-            echo "$audit"
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})
             echo "$name"
             if [[ "$name" == *"/"* ]]; then
