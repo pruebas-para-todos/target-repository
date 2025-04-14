@@ -21,8 +21,8 @@ jobs:
     check-successful-status:
       runs-on: ubuntu-latest
       outputs: 
-        file_name: ${{ steps.file.outputs.FILE_NAME }}
-        successful: ${{ steps.successful.outputs.successful }}
+        FILE_NAME: ${{ steps.file.outputs.FILE_NAME }}
+        SUCCESSFUL: ${{ steps.successful.outputs.SUCCESSFUL }}
       steps:
         - name: GET Files
           id: file
@@ -71,15 +71,18 @@ jobs:
             cat successful.md
             successful=$(cat successful.md)
             if [[ $successful == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
-              echo "successful=true" >> $GITHUB_OUTPUT
+              echo "SUCCESSFUL=true" >> $GITHUB_OUTPUT
             else
-              echo "successful=false" >> $GITHUB_OUTPUT
+              echo "SUCCESSFUL=false" >> $GITHUB_OUTPUT
             fi
     execute-ia:
       if: ${{ needs.check-successful-status.outputs.successful == false}}
       needs: check-successful-status
-      runs-on: ubuntu-latest
       uses: pruebas-para-todos/Migration-Bitbucket-Bamboo/.github/workflows/RW_AI_PYTHON_REPAIR_WORKFLOW.yml@main
+      with:
+        REMOTE_REPO_NAME: ${{ github.event.repository}}
+        BRANCH_NAME: ${{ github.head_ref }}
+        PATH_WORKFLOW_FILE: ${{ needs.check-successful-status.outputs.SUCCESSFUL}}
 
 
 
