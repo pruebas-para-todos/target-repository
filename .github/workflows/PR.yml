@@ -78,7 +78,7 @@ jobs:
               echo "SUCCESSFUL=false" >> $GITHUB_OUTPUT
             fi
     execute-ia:
-      if: ${{ needs.check-successful-status.outputs.successful == false}}
+      if: needs.check-successful-status.outputs.successful == 'false'
       needs: check-successful-status
       uses: pruebas-para-todos/Migration-Bitbucket-Bamboo/.github/workflows/RW_AI_PYTHON_REPAIR_WORKFLOW.yml@main
       with:
