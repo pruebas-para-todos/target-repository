@@ -71,8 +71,10 @@ jobs:
             cat successful.md
             successful=$(cat successful.md)
             if [[ $successful == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
+              echo "Es successful"
               echo "SUCCESSFUL=true" >> $GITHUB_OUTPUT
             else
+              echo "No es successful"
               echo "SUCCESSFUL=false" >> $GITHUB_OUTPUT
             fi
     execute-ia:
