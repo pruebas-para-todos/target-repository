@@ -49,6 +49,7 @@ jobs:
           id: path
           run: |
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})/
+            echo "Este es el nombre: $name"
             if [[ $name == *"/"* ]]; then
               echo "Es un plan: $name"
               project=$(echo $name | cut -d'/' -f1)
