@@ -73,11 +73,11 @@ jobs:
               echo "No es successful"
               echo "SUCCESSFUL=false" >> $GITHUB_OUTPUT
             fi
-    # execute-ia:
-    #   if: needs.check-successful-status.outputs.successful == 'false'
-    #   needs: check-successful-status
-    #   uses: pruebas-para-todos/Migration-Bitbucket-Bamboo/.github/workflows/RW_AI_PYTHON_REPAIR_WORKFLOW.yml@main
-    #   with:
-    #     REMOTE_REPO_NAME: ${{ github.event.repository.name }}
-    #     BRANCH_NAME: ${{ github.head_ref }}
-    #     PATH_WORKFLOW_FILE: ${{ needs.check-successful-status.outputs.SUCCESSFUL}}
+    execute-ia:
+      if: needs.check-successful-status.outputs.successful == 'false'
+      needs: check-successful-status
+      uses: pruebas-para-todos/Migration-Bitbucket-Bamboo/.github/workflows/RW_AI_PYTHON_REPAIR_WORKFLOW.yml@main
+      with:
+        REMOTE_REPO_NAME: ${{ github.event.repository.name }}
+        BRANCH_NAME: ${{ github.head_ref }}
+        PATH_WORKFLOW_FILE: ${{ needs.check-successful-status.outputs.SUCCESSFUL}}
