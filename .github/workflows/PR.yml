@@ -50,11 +50,13 @@ jobs:
           run: |
             name=$(yq -e .name ${{ env.CHECKOUT_HEAD_PATH }}/${{ steps.file.outputs.FILE_NAME }})/
             if [[ $name == *"/"* ]]; then
+              echo "Es un plan: $name"
               project=$(echo $name | cut -d'/' -f1)
               plan=$(echo $name | cut -d'/' -f2)
-              echo "FILE_PATH=build/$project/$plan/.github/workflows/$plan.yml" >> $GITHUB_OUTPUT
+              echo "FILE_PATH=build/$project/$plan/" >> $GITHUB_OUTPUT
             else
-              echo "FILE_PATH=deployment/$name/.github/workflows/" >> $GITHUB_OUTPUT
+              echo "Es un deployment: $name"
+              echo "FILE_PATH=deployment/$name/" >> $GITHUB_OUTPUT
             fi
         - name: Check if that YML is successful
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
