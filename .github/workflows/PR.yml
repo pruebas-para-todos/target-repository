@@ -18,8 +18,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-    execute-ia:
+    check-successful-status:
       runs-on: ubuntu-latest
+      outputs: 
+        file_name: ${{ steps.file.outputs.FILE_NAME }}
+        successful: ${{ steps.successful.outputs.successful }}
       steps:
         - name: GET Files
           id: file
@@ -61,16 +64,22 @@ jobs:
               echo "FILE_PATH=deployment/$cut_name/" >> $GITHUB_OUTPUT
             fi
         - name: Check if that YML is successful
+          id: successful
           working-directory: ${{ env.CHECKOUT_AUDIT_PATH }}
           run: |
             awk '/### Successful/{p=1} /### Partially successful/{p=0} p' README.md > successful.md
             cat successful.md
             successful=$(cat successful.md)
             if [[ $successful == *"${{ steps.path.outputs.FILE_PATH }}"* ]]; then
-              echo "exists"
+              echo "successful=true" >> $GITHUB_OUTPUT
             else
-              echo "does not exist"
+              echo "successful=false" >> $GITHUB_OUTPUT
             fi
+    execute-ia:
+      if: ${{ needs.check-successful-status.outputs.successful == false}}
+      needs: check-successful-status
+      runs-on: ubuntu-latest
+      uses: pruebas-para-todos/Migration-Bitbucket-Bamboo/.github/workflows/RW_AI_PYTHON_REPAIR_WORKFLOW.yml@main
 
 
 
