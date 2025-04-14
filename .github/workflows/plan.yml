@@ -1,0 +1,17 @@
+name: asd/plan
+on:
+  workflow_dispatch:
+jobs:
+  Default-Stage-Default-Job:
+    runs-on: ubuntu-latest
+    steps:
+#     # This item has no matching transformer
+#     - any-task/plugin-key/com.atlassian.bamboo.plugins.tomcat.bamboo-tomcat-plugin:deployAppTask:
+#         any-task:
+#           plugin-key: com.atlassian.bamboo.plugins.tomcat.bamboo-tomcat-plugin:deployAppTask
+#           configuration:
+#             tomcatUrl: http://localhost:8080/manager/
+#             warFilePath: src/
+#             tomcatUsername: admin
+#             encTomcatPassword: BAMSCRT@0@0@N5r7aZ6H9yjZ5zbDrMHSag==
+#             appContext: "/test"
